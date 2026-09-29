@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug STM32L476 (st-util)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/Debug/homework_18.elf",
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb-multiarch",
+      "targetArchitecture": "arm",
+      "debugServerPath": "/usr/bin/st-util",
+      "debugServerArgs": "--connect-under-reset -F 480k",
+      "serverStarted": "Listening at",
+      "filterStderr": true,
+      "externalConsole": false,
+      "preLaunchTask": "STM32: build",
+      "postDebugTask": "STM32: kill stray debug processes",
+      "customLaunchSetupCommands": [
+        { "text": "file ${workspaceFolder}/build/Debug/homework_18.elf" },
+        { "text": "target remote localhost:4242" },
+        { "text": "monitor reset halt" },
+        { "text": "load" }
+      ],
+      "launchCompleteCommand": "exec-continue",
+      "setupCommands": [
+        { "description": "Enable pretty-printing for gdb", "text": "-enable-pretty-printing", "ignoreFailures": true }
+      ]
+    }
+  ]
+}

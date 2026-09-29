@@ -1,0 +1,56 @@
+# Базові пакети для стабільної роботи Ubuntu image.
+ca-certificates
+curl
+locales
+sudo
+tzdata
+ssh
+git
+
+# C++ toolchain і language server для редактора.
+gcc
+clang
+clangd
+clang-tidy
+
+# Runtime-бібліотеки Clang sanitizer-ів і symbolizer для читабельного ASan/UBSan output.
+libclang-rt-18-dev
+llvm-18
+
+# Крос-тулчейн для ARM64-пристроїв: RPi4, Radxa ROCK 5B+, Jetson.
+g++-aarch64-linux-gnu
+
+# Крос-тулчейн bare-metal для Cortex-M (STM32 Nucleo). Немає ОС під
+# ціллю - окремий тулчейн від aarch64-linux-gnu вище, той для Linux
+# userspace. libnewlib - лише Recommends у gcc-arm-none-eabi, а
+# --no-install-recommends вище її пропускає; без неї немає errno.h та
+# решти libc-заголовків для цілі.
+gcc-arm-none-eabi
+libnewlib-arm-none-eabi
+
+# Те саме для C++ stdlib на цій цілі (той самий Recommends-not-Depends
+# гачок, тепер для libstdc++ замість libc).
+libstdc++-arm-none-eabi-newlib
+
+# GDB server для ST-Link (SWD debug/flash через libusb, /dev/bus/usb).
+# WSL2 має свою копію лише заради udev rule (MODE 0666 на ST-Link node) -
+# контейнеру потрібна власна копія openocd/st-flash/st-util для флешингу.
+openocd
+stlink-tools
+
+# Інструменти для заняття 2.4: локальний і remote debug, memory diagnostics.
+gdb
+gdbserver
+gdb-multiarch
+valgrind
+
+# Інструменти збірки і форматери, які використовуються в лекціях та CI.
+make
+cmake
+clang-format
+cmake-format
+ninja-build
+
+# Інструменти та бібліотеки для роботи з GPIO (gpioinfo, gpiodetect, C++ API).
+gpiod
+libgpiod-dev

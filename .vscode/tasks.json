@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "STM32: build",
+      "type": "shell",
+      "command": "cmake --preset Debug && cmake --build --preset Debug",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "STM32: kill stray debug processes",
+      "type": "shell",
+      "command": "pkill -f st-util; pkill -f gdb-multiarch; true",
+      "problemMatcher": [],
+      "presentation": { "reveal": "silent", "panel": "dedicated", "clear": false }
+    },
+    {
+      "label": "STM32: flash",
+      "type": "shell",
+      "command": "arm-none-eabi-objcopy -O binary build/Debug/homework_18.elf build/Debug/homework_18.bin && st-flash write build/Debug/homework_18.bin 0x08000000 && st-flash reset",
+      "dependsOn": ["STM32: build"],
+      "dependsOrder": "sequence",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "STM32: clean build directory",
+      "type": "shell",
+      "command": "rm -rf build",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    }
+  ]
+}
